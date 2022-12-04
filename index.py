@@ -13,10 +13,12 @@ def main():
                 for i, line in enumerate(file):
                     yt = YouTube(line)
                     print(f" {i} - Downloading {yt.title}")
-                    yt.streams.filter(only_video=True).first().download(
+                    yt.streams.filter(only_audio=True).first().download(
                         output_path="audio"
                     )
-            print("audio baixado\n")
+            file.close()
+        print("Download complete")
+        sys.exit()
     except (IndexError):
         print_banner()
     except (FileNotFoundError):
