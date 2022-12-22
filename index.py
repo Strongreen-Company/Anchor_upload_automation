@@ -12,11 +12,11 @@ def main():
             with open(sys.argv[2], "r") as file:
                 for i, line in enumerate(file):
                     yt = YouTube(line)
-                    print(f" {i} - Downloading {yt.title}")
+                    print(f" {int(i) + 1} - Downloading {yt.title}")
+                    names.append(yt.title)
                     yt.streams.filter(only_audio=True).first().download(
                         output_path="audio"
                     )
-            file.close()
         print("Download complete")
         sys.exit()
     except (IndexError):
