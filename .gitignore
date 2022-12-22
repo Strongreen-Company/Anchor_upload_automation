@@ -2,3 +2,5 @@
 url.txt
 __pycache__
 audio
+.env
+geckodriver.log
