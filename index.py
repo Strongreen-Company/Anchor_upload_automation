@@ -3,6 +3,7 @@ import os
 from pytube import YouTube
 
 from banner import print_banner
+from uploadSelenium import upload_file
 
 
 def main():
@@ -17,7 +18,10 @@ def main():
                         output_path="audio"
                     )
                     base, ext = os.path.splitext(download)
+                    print(base)
+                    print(ext)
                     os.rename(download, base + ".mp3")
+                    upload_file(f"{base}.mp3", {"title": yt.title, "description": yt.description})
         print("Download complete")
         sys.exit()
     except (IndexError):
