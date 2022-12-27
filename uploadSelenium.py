@@ -66,5 +66,5 @@ if __name__ == "__main__":
         "title": "Falando com Maker Comece cedo mas saiba onde quer chegar! [Thais Sadami]",
         "description": "é um teste",
     }
-    name = "./audio/Falando com Maker De qual lado da força você está Definindo prioridades e fazendo escolhas[Divina].mp3"
+    name = "./audio/test.mp3"
     upload_file(name, dist)
