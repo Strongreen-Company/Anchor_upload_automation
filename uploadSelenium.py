@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 import os
-
+import demoji
 from dotenv import load_dotenv
 
 
@@ -18,13 +18,15 @@ def upload_file(file_path, infos):
     passwd = os.getenv("PASSWORD")
     try:
         options = ChromeOptions()
-        # options.add_argument("--headless")
+        options.add_argument("--headless")
         print("iniciando upload")
         drive = Chrome(options=options)
         drive.get(url)
         print("preenchendo login")
         drive.find_element(by="id", value="email").send_keys(email)
-        drive.find_element(by="id", value="password").send_keys(passwd, Keys.ENTER)
+        drive.find_element(by="id", value="password").send_keys(
+            passwd, Keys.ENTER
+        )
         sleep(5)
         print("preenchendo arquivo")
         inputFile = drive.find_element(By.TAG_NAME, "input")
@@ -47,19 +49,22 @@ def upload_file(file_path, infos):
         drive.find_element(
             By.XPATH,
             '//*[@id="app-content"]/div/form/div[4]/div[2]/div[2]/div/div/div[2]/div/div[2]/div',
-        ).send_keys(infos["description"])
+        ).send_keys(demoji.replace(infos["description"], ''))
         sleep(5)
-        drive.find_element(By.XPATH, "//*[@id=\"app-content\"]/div/form/div[1]/div[2]/button[2]").click()
+        drive.find_element(
+            By.XPATH, '//*[@id="app-content"]/div/form/div[1]/div[2]/button[2]'
+        ).click()
         sleep(3)
         print("Episódio publicado")
         drive.close()
     except (KeyboardInterrupt):
         print("\nUpload interrompido")
 
+
 if __name__ == "__main__":
     dist = {
         "title": "Falando com Maker Comece cedo mas saiba onde quer chegar! [Thais Sadami]",
-        "description": "é um teste"
+        "description": "é um teste",
     }
     name = "./audio/Falando com Maker De qual lado da força você está Definindo prioridades e fazendo escolhas[Divina].mp3"
     upload_file(name, dist)
