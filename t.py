@@ -12,8 +12,10 @@ data = json.loads(response.text)
 time = datetime.strptime(
     data["items"][0]["snippet"]["publishedAt"], "%Y-%m-%dT%H:%M:%SZ"
 )
-print(time.date() == datetime.now().date())
 if time.date() == datetime.now().date():
     title = data["items"][0]["snippet"]["title"]
-    if re.search(r"Falando com", title, re.IGNORECASE):
-        print("New video")
+    if re.search(r"estr", title, re.IGNORECASE):
+        last_video_url = f"https://www.youtube.com/watch?v={data['items'][0]['id']['videoId']}"
+        print(last_video_url)
+else:
+    print("No video today")
