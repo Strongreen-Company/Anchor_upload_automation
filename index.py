@@ -1,33 +1,41 @@
 import sys
 import os
 from pytube import YouTube
-
+import shutil
 from banner import print_banner
 from uploadSelenium import upload_file
 
 
-def main():
+def downloadAndUpload(link, index=1):
+    yt = YouTube(link)
+    print(f" {int(index) + 1} - Downloading {yt.title}")
+    download = (
+        yt.streams.filter(only_audio=True)
+        .first()
+        .download(output_path="audio")
+    )
+    base, ext = os.path.splitext(download)
+    print(base)
+    print(ext)
+    os.rename(download, base + ".mp3")
+    upload_file(
+        f"{base}.mp3",
+        {"title": yt.title, "description": yt.description},
+    )
+
+
+def main(link=None):
     try:
-        if sys.argv[1] and sys.argv[1] == "-path":
+        if link is not None:
+            downloadAndUpload(link)
+            shutil.rmtree("audio")
+        elif sys.argv[1] and sys.argv[1] == "-path":
             print("initiating download")
             with open(sys.argv[2], "r") as file:
                 for i, line in enumerate(file):
-                    yt = YouTube(line)
-                    print(f" {int(i) + 1} - Downloading {yt.title}")
-                    download = (
-                        yt.streams.filter(only_audio=True)
-                        .first()
-                        .download(output_path="audio")
-                    )
-                    base, ext = os.path.splitext(download)
-                    print(base)
-                    print(ext)
-                    os.rename(download, base + ".mp3")
-                    upload_file(
-                        f"{base}.mp3",
-                        {"title": yt.title, "description": yt.description},
-                    )
-        print("Download complete")
+                    downloadAndUpload(line, i)
+            shutil.rmtree("audio")
+
         sys.exit()
     except (IndexError):
         print_banner()
@@ -35,6 +43,7 @@ def main():
         print("arquivo não encontrado")
     except KeyboardInterrupt:
         print("\nsaindo do programa ...")
+        shutil.rmtree("audio")
         sys.exit()
 
 
