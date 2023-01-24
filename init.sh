@@ -1,10 +1,10 @@
 #!/bin/bash
 
 echo "Criando ambiente virtual..."
-python3 -m venv env
+python3 -m venv venv
 
 echo "Ativando ambiente virtual..."
-source env/bin/activate
+source venv/bin/activate
 echo "Ambiente virtual ativado!"
 
 echo "Instalando dependencias..."
