@@ -9,8 +9,9 @@ from EmailClass import email_sender
 
 load_dotenv()
 
+
 def verify_video():
-    url = f"https://www.googleapis.com/youtube/v3/search?key={os.getenv('API_KEY')}&channelId={os.getenv('CHANNEL_ID')}&part=snippet,id&order=date&maxResults=1"
+    url = f"https://www.googleapis.com/youtube/v3/search?key={os.getenv('API_KEY_YOUTUBE')}&channelId={os.getenv('CHANNEL_ID')}&part=snippet,id&order=date&maxResults=1"
     response = requests.get(url)
     data = json.loads(response.text)
     time = datetime.strptime(
@@ -21,9 +22,9 @@ def verify_video():
         if re.search(r"estr", title, re.IGNORECASE):
             last_video_url = f"https://www.youtube.com/watch?v={data['items'][0]['id']['videoId']}"
             main(last_video_url)
+        email_sender().send_sucesso()
     else:
         email_sender().send_falha()
-        print("No video today")
 
 
 if __name__ == "__main__":
