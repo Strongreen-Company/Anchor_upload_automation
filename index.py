@@ -7,21 +7,25 @@ from uploadSelenium import upload_file
 
 
 def downloadAndUpload(link, index=1):
-    yt = YouTube(link)
-    print(f" {int(index) + 1} - Downloading {yt.title}")
-    download = (
-        yt.streams.filter(only_audio=True)
-        .first()
-        .download(output_path="audio")
-    )
-    base, ext = os.path.splitext(download)
-    print(base)
-    print(ext)
-    os.rename(download, base + ".mp3")
-    upload_file(
-        f"{base}.mp3",
-        {"title": yt.title, "description": yt.description},
-    )
+    try:
+        yt = YouTube(link)
+        print(f" {int(index) + 1} - Downloading {yt.title}")
+        download = (
+            yt.streams.filter(only_audio=True)
+            .first()
+            .download(output_path="audio")
+        )
+        base, ext = os.path.splitext(download)
+        print(base)
+        print(ext)
+        os.rename(download, base + ".mp3")
+        upload_file(
+            f"{base}.mp3",
+            {"title": yt.title, "description": yt.description},
+        )
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Verifique se a url esta correta ou se o video esta disponivel")
 
 
 def main(link=None):
@@ -36,7 +40,6 @@ def main(link=None):
                     downloadAndUpload(line, i)
             shutil.rmtree("audio")
 
-        sys.exit()
     except (IndexError):
         print_banner()
     except (FileNotFoundError):
