@@ -10,11 +10,9 @@ def downloadAndUpload(link, index=1):
     try:
         yt = YouTube(link)
         print(f" {int(index) + 1} - Downloading {yt.title}")
-        download = (
-            yt.streams.filter(only_audio=True)
-            .first()
-            .download(output_path="audio")
-        )
+        download = yt.streams.filter(only_audio=True)
+        if download is not None:
+            download = download[0].download("audio")
         base, ext = os.path.splitext(download)
         print(base)
         print(ext)
