@@ -17,7 +17,7 @@ jobs:
                   PORT: ${{ secrets.PORT }}
                   KEY: ${{ secrets.SSH_KEY }}
               with:
-                  source: "."
+                  source: "../Anchor_upload_automation"
                   target: "~/home/heirka/"
 
             - name: Executing remote command
