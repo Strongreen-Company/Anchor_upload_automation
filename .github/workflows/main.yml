@@ -14,8 +14,8 @@ jobs:
               with:
                   host: ${{ secrets.HOST }}
                   username: ${{ secrets.USERNAME }}
-                  key: ${{ secrets.SSH_KEY }}
+                  password: ${{ secrets.PASSWORD }}
                   port: ${{ secrets.PORT }}
                   script: |
-                      cd Anchor_upload_automation
+                      cd ~/home/herika
                       git pull origin deploy
