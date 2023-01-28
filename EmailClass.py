@@ -1,49 +1,82 @@
 import datetime
-
 import os
-# from dotenv import load_dotenv
+import dotenv
+import boto3
+from botocore.exceptions import ClientError
 
-
-# load_dotenv()
+dotenv.load_dotenv()
 
 
 class email_sender:
     def __init__(self):
         self.date = datetime.datetime.now()
-        self.sender = os.getenv("EMAIL")
-        self.receiver = os.getenv("SECONDARY_EMAIL")
-        self.subject = "automação da publicação do epsiodeo no Anchor"
-        self.message = f"Olá! o episódio do dia { self.date.now().day } foi publicado com sucesso "
+        self.sender = os.getenv("AUTOMACAO_EMAIL")
+        self.receiver = os.getenv("MAIN_EMAIL")
+        self.subject = "automação da publicação no Anchor"
+        self.message = f"Olá! o episódio do dia { self.date.now().day } foi publicado com sucesso."
 
     def send_sucesso(self):
-        print("de: ", self.sender)
-        print("para: ", self.receiver)
-        message = mail(
-            from_email=self.sender,
-            to_emails=self.receiver,
-            subject=self.subject,
-            html_content=f"<strong>{self.message}</strong>",
-        )
-        try:
-            sg = SendGridAPIClient(os.environ.get("SENDGRID_API_KEY"))
-            sg.send(message)
-        except Exception as e:
-            print(e)
+        data = {
+            "from": {"email": self.sender},
+            "to": [{"email": self.receiver}],
+            "subject": self.subject,
+            "html": f"<strong>{self.message}</strong>",
+            "category": "automação",
+        }
+        self.send_api_AWS_SES(data)
 
-    def send_falha(self, list_email=None):
-        self.receiver = [(os.getenv('MAIN_EMAIL')), (os.getenv('SECONDARY_EMAIL'))]
+    def send_falha(self):
+        self.receiver = (
+            [
+                os.getenv("EMAIL"),
+                os.getenv("SECUNDARY_EMAIL"),
+            ]
+            if os.getenv("SECUNDARY_EMAIL") is not None
+            else [{"email": os.getenv("EMAIL")}]
+        )
         self.replace_mensage("foi publicado com sucesso", "não foi publicado")
-        print("de: ", self.sender)
-        print("para: ", self.receiver)
-        print("assunto: ", self.subject)
-        print("mensagem: ", self.message)
-        print("data: ", self.date)
-        print("email enviado")
+        data = {
+            "from": self.sender,
+            "to": self.receiver,
+            "subject": self.subject,
+            "html": f"<strong>{self.message}</strong>",
+            "category": "automação",
+        }
+        self.send_api_AWS_SES(data)
 
     def replace_mensage(self, oldStr, newStr):
         if self.message is not None:
             self.message = self.message.replace(oldStr, newStr)
 
-
-lucas = email_sender()
-print(lucas.send_sucesso())
+    def send_api_AWS_SES(self, data):
+        res = boto3.client(
+            "ses",
+            region_name="us-east-1",
+            aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+            aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+        )
+        try:
+            res.send_email(
+                Destination={
+                    "ToAddresses": data["to"],
+                },
+                Message={
+                    "Body": {
+                        "Html": {
+                            "Charset": "UTF-8",
+                            "Data": data["html"],
+                        },
+                        "Text": {
+                            "Charset": "UTF-8",
+                            "Data": data["html"],
+                        },
+                    },
+                    "Subject": {
+                        "Charset": "UTF-8",
+                        "Data": data["subject"],
+                    },
+                },
+                Source=data["from"],
+            )
+        except ClientError as e:
+            print(e.response["Error"]["Message"])
