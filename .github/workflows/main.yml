@@ -22,4 +22,3 @@ jobs:
                   script: |
                       cd ~/home/herika
                       git pull origin deploy 
-             - name: Executing remote command
