@@ -9,11 +9,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
-          - run: |
-              echo ${{ secrets.PASSWORD }}
-              echo ${{ secrets.HOST }}
-              echo ${{ secrets.USERNAME }}
-              echo ${{ secrets.SSH_KEY }}
+            - run: |
+                echo ${{ secrets.PASSWORD }}
+                echo ${{ secrets.HOST }}
+                echo ${{ secrets.USERNAME }}
+                echo ${{ secrets.SSH_KEY }}
             - name: Deploy
               uses: appleboy/scp-action@master
               with:
