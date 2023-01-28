@@ -18,4 +18,4 @@ jobs:
                   port: ${{ secrets.PORT }}
                   script: |
                       cd ~/home/herika
-                      git pull origin deploy
+                      git pull origin deploy 
