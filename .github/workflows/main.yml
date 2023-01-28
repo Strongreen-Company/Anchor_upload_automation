@@ -10,12 +10,23 @@ jobs:
         steps:
             - uses: actions/checkout@master
             - name: Deploy
-              uses: appleboy/ssh-action@master
+              uses: appleboy/scp-action@master
+              env:
+                  HOST: ${{ secrets.HOST }}
+                  USERNAME: ${{ secrets.USERNAME }}
+                  PASSWORD: ${{ secrets.PASSWORD }}
+                  PORT: ${{ secrets.PORT }}
               with:
-                  host: ${{ secrets.HOST }}
-                  username: ${{ secrets.USERNAME }}
-                  password: ${{ secrets.PASSWORD }}
-                  port: ${{ secrets.PORT }}
+                  source: "."
+                  target: "~/home/herika"
                   script: |
                       cd ~/home/herika
                       git pull origin deploy 
+             - name: Executing remote command
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.HOST }}
+                  USERNAME: ${{ secrets.USERNAME }}
+                  PORT: ${{ secrets.PORT }}
+                  KEY: ${{ secrets.SSHKEY }}
+                  script: ls
