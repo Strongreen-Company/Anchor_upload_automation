@@ -13,13 +13,14 @@ logging.basicConfig(
     format="%(asctime)s -%(levelname)s  -  %(message)s ",
     encoding="utf-8",
     datefmt="%m/%d/%Y %I:%M:%S %p",
-    filename="log.log",
+    filename="/var/log/anchor/system_anchor.log",
     filemode="w",
 )
 load_dotenv()
 
 
 def verify_video():
+
     try:
         url = f"""https://www.googleapis.com/youtube/v3/search?key={os.getenv('API_KEY_YOUTUBE')}&channelId={os.getenv('CHANNEL_ID')}&part=snippet,id&order=date&maxResults=1"""
         response = requests.get(url)
