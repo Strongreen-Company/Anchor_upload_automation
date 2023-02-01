@@ -3,6 +3,15 @@ import os
 import dotenv
 import boto3
 from botocore.exceptions import ClientError
+import logging
+
+logging.basicConfig(
+    format="%(asctime)s -%(levelname)s  -  %(message)s ",
+    encoding="utf-8",
+    datefmt="%m/%d/%Y %I:%M:%S %p",
+    filename="log.log",
+    filemode="w",
+)
 
 dotenv.load_dotenv()
 
@@ -79,4 +88,7 @@ class email_sender:
                 Source=data["from"],
             )
         except ClientError as e:
+            logging.exception(
+                "esse é o erro ocorrido: %s", e.response["Error"]["Message"]
+            )
             print(e.response["Error"]["Message"])

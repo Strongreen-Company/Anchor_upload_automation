@@ -7,6 +7,15 @@ from time import sleep
 import os
 import demoji
 from dotenv import load_dotenv
+import logging
+
+logging.basicConfig(
+    format="%(asctime)s -%(levelname)s  -  %(message)s ",
+    encoding="utf-8",
+    datefmt="%m/%d/%Y %I:%M:%S %p",
+    filename="log.log",
+    filemode="w",
+)
 
 
 def upload_file(file_path, infos):
@@ -49,16 +58,20 @@ def upload_file(file_path, infos):
         drive.find_element(
             By.XPATH,
             '//*[@id="app-content"]/div/form/div[4]/div[2]/div[2]/div/div/div[2]/div/div[2]/div',
-        ).send_keys(demoji.replace(infos["description"], ''))
+        ).send_keys(demoji.replace(infos["description"], ""))
         sleep(5)
         drive.find_element(
             By.XPATH, '//*[@id="app-content"]/div/form/div[1]/div[2]/button[2]'
         ).click()
         sleep(3)
-        print("Episódio publicado")
+        print("upload concluido com sucesso")
+        logging.info("upload concluido com sucesso")
         drive.close()
     except (KeyboardInterrupt):
+        logging.exception("upload interrompido")
         print("\nUpload interrompido")
+    except Exception as e:
+        logging.exception("esse é o erro ocorrido: %s", e)
 
 
 if __name__ == "__main__":
