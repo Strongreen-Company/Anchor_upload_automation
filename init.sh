@@ -10,6 +10,7 @@ FOLDER_NAME="/var/log/anchor"
 
 if [ ! -d "$FOLDER_NAME" ]; then
     mkdir $FOLDER_NAME
+    sudo chmod +777 /var/log/anchor
 fi
 
 echo "Ativando ambiente virtual..."
@@ -19,5 +20,5 @@ echo "Ambiente virtual ativado!"
 echo "Instalando dependencias..."
 pip install -r "${PWD}"/requirements.txt
 
-echo "Executando arquivo Python..."
-python3 "${PWD}"/verifyLastVideoInYoutube.py
+#echo "Executando arquivo Python..."
+sudo python3 "${PWD}"/verifyLastVideoInYoutube.py
