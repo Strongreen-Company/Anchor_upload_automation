@@ -4,9 +4,9 @@
 echo "Criando ambiente virtual..."
 python3 -m venv venv
 
-echo "Criando pasta para armazenamento de logs em /var/log/anchor"
+echo "Criando pasta para armazenamento de logs em /log/anchor"
 
-FOLDER_NAME="/var/log/anchor"
+FOLDER_NAME="log/anchor"
 
 if [ ! -d "$FOLDER_NAME" ]; then
     sudo mkdir "$FOLDER_NAME"
