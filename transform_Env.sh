@@ -1,5 +1,7 @@
 #!/bin/bash
+#shellcheck disable=SC2163
 
-while read -r linha; do
+while IFS= read -r linha || [[ -n "$linha" ]]; do
     echo "$linha"
-done <.env
+    export "$linha"
+done <".env"
