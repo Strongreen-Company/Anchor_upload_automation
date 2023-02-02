@@ -1,0 +1,1 @@
+o usuario que rodar esse sistema deve está no grupo root

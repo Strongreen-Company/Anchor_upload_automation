@@ -13,7 +13,7 @@ logging.basicConfig(
     format="%(asctime)s -%(levelname)s  -  %(message)s ",
     encoding="utf-8",
     datefmt="%m/%d/%Y %I:%M:%S %p",
-    filename="log/anchor/system_anchor.log",
+    filename="/var/log/anchor/system_anchor.log",
     filemode="w",
 )
 
