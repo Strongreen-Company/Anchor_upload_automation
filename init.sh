@@ -30,5 +30,5 @@ echo "Instalando dependências listadas no arquivo requirements.txt..."
 pip install -r "${PWD}"/requirements.txt
 
 echo "Executando arquivo Python verifyLastVideoInYoutube.py..."
-sudo python"${PWD}"/verifyLastVideoInYoutube.py
+python "${PWD}"/verifyLastVideoInYoutube.py
 echo "Execução do script concluída."
