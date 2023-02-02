@@ -6,11 +6,11 @@ python3 -m venv venv
 
 echo "criando pasta para logs caso não exista em /var/log/anchor"
 
-FOLDER_NAME="/var/log/anchor"
+FOLDER_NAME="${PWD}/var/log/anchor"
 
 if [ ! -d "$FOLDER_NAME" ]; then
-    mkdir $FOLDER_NAME
-    sudo chmod +777 /var/log/anchor
+    mkdir "$FOLDER_NAME"
+    chmod +777 "${FOLDER_NAME}"
 fi
 
 echo "Ativando ambiente virtual..."
@@ -22,4 +22,4 @@ echo "Instalando dependencias..."
 pip install -r "${PWD}"/requirements.txt
 
 echo "Executando arquivo Python..."
-sudo python3 "${PWD}"/verifyLastVideoInYoutube.py
+python3 "${PWD}"/verifyLastVideoInYoutube.py
