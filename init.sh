@@ -16,6 +16,7 @@ fi
 echo "Ativando ambiente virtual..."
 source venv/bin/activate
 echo "Ambiente virtual ativado!"
+sleep 5s
 
 echo "Instalando dependencias..."
 pip install -r "${PWD}"/requirements.txt
