@@ -30,13 +30,13 @@ def verify_video():
         )
         if time.date() == datetime.now().date():
             title = data["items"][0]["snippet"]["title"]
-            if re.search(r"estr", title, re.IGNORECASE):
+            if re.search(r"falando com maker", title, re.IGNORECASE):
                 last_video_url = f"https://www.youtube.com/watch?v={data['items'][0]['id']['videoId']}"
                 main(last_video_url)
             email_sender().send_sucesso()
             logging.info("episodio postado hoje com sucesso")
         else:
-            email_sender().send_falha()
+            # email_sender().send_falha()
             logging.error("o video não foi postado hoje")
     except Exception as e:
         logging.exception("esse é o erro ocorrido: %s", e)
