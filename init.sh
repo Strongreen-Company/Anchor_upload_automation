@@ -21,5 +21,5 @@ sleep 5s
 echo "Instalando dependencias..."
 pip install -r "${PWD}"/requirements.txt
 
-#echo "Executando arquivo Python..."
+echo "Executando arquivo Python..."
 sudo python3 "${PWD}"/verifyLastVideoInYoutube.py

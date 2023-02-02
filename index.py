@@ -42,7 +42,7 @@ def main(link=None):
         if link is not None:
             downloadAndUpload(link)
             shutil.rmtree("audio")
-        elif sys.argv[1] and sys.argv[1] == "-path":
+        elif sys.argv[1] == "-path":
             print("initiating download")
             with open(sys.argv[2], "r") as file:
                 for i, line in enumerate(file):
