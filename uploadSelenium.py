@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
 
 from time import sleep
 import os
@@ -38,7 +39,7 @@ def upload_file(file_path, infos):
         options.add_argument("--headless")
         options.add_argument("--disable-gpu")
         print("iniciando upload")
-        drive = Chrome(options=options)
+        drive = Chrome(options=options, service=Service("./chromedriver"))
         drive.get(url)
         print("preenchendo login")
         drive.find_element(by="id", value="email").send_keys(email)
