@@ -4,6 +4,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
 
 from time import sleep
 import os
@@ -38,8 +40,13 @@ def upload_file(file_path, infos):
         options.add_argument(f"user-agent={agente}")
         options.add_argument("--headless")
         options.add_argument("--disable-gpu")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+
         print("iniciando upload")
-        drive = Chrome(options=options, service=Service("./chromedriver"))
+        drive = Chrome(
+            options=options, service=(Service(ChromeDriverManager().install()))
+        )
         drive.get(url)
         print("preenchendo login")
         drive.find_element(by="id", value="email").send_keys(email)
@@ -51,7 +58,6 @@ def upload_file(file_path, infos):
         inputFile = drive.find_element(By.TAG_NAME, "input")
         drive.execute_script("arguments[0].style.display='block';", inputFile)
         inputFile.send_keys(os.path.abspath(file_path))
-        sleep(1000)
         print("aguardando upload")
         wait = WebDriverWait(drive, 500)
         element = wait.until(
