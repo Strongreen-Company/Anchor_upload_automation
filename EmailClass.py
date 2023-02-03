@@ -26,7 +26,7 @@ class email_sender:
 
     def send_sucesso(self):
         data = {
-            "from": {"email": self.sender},
+            "from": {self.sender},
             "to": [
                 os.getenv("EMAIL"),
                 os.getenv("SECUNDARY_EMAIL"),
