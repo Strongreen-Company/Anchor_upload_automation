@@ -10,7 +10,7 @@ logging.basicConfig(
     encoding="utf-8",
     datefmt="%m/%d/%Y %I:%M:%S %p",
     filename="log/anchor/system_anchor.log",
-    filemode="w",
+    filemode="a",
 )
 
 dotenv.load_dotenv()
@@ -27,7 +27,10 @@ class email_sender:
     def send_sucesso(self):
         data = {
             "from": {"email": self.sender},
-            "to": [{"email": self.receiver}],
+            "to": [
+                os.getenv("EMAIL"),
+                os.getenv("SECUNDARY_EMAIL"),
+            ],
             "subject": self.subject,
             "html": f"<strong>{self.message}</strong>",
             "category": "automação",
