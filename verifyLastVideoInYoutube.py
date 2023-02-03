@@ -11,8 +11,8 @@ from EmailClass import email_sender
 
 logging.basicConfig(
     format="%(asctime)s -%(levelname)s  -  %(message)s ",
+    level=logging.INFO,
     encoding="utf-8",
-    datefmt="%m/%d/%Y %I:%M:%S %p",
     filename="log/anchor/system_anchor.log",
     filemode="a",
 )
