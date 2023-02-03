@@ -44,7 +44,7 @@ class email_sender:
                 os.getenv("SECUNDARY_EMAIL"),
             ]
             if os.getenv("SECUNDARY_EMAIL") is not None
-            else [{"email": os.getenv("EMAIL")}]
+            else [{os.getenv("EMAIL")}]
         )
         self.replace_mensage("foi publicado com sucesso", "não foi publicado")
         data = {
