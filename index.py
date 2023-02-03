@@ -12,7 +12,7 @@ logging.basicConfig(
     encoding="utf-8",
     datefmt="%m/%d/%Y %I:%M:%S %p",
     filename="log/anchor/system_anchor.log",
-    filemode="w",
+    filemode="a",
 )
 
 

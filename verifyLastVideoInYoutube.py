@@ -14,7 +14,7 @@ logging.basicConfig(
     encoding="utf-8",
     datefmt="%m/%d/%Y %I:%M:%S %p",
     filename="log/anchor/system_anchor.log",
-    filemode="w",
+    filemode="a",
 )
 load_dotenv()
 
@@ -36,7 +36,7 @@ def verify_video():
             email_sender().send_sucesso()
             logging.info("episodio postado hoje com sucesso")
         else:
-            # email_sender().send_falha()
+            email_sender().send_falha()
             logging.error("o video não foi postado hoje")
     except Exception as e:
         logging.exception("esse é o erro ocorrido: %s", e)
