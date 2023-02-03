@@ -3,18 +3,20 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
 from time import sleep
 import os
 import demoji
 from dotenv import load_dotenv
 import logging
+import random
 
 logging.basicConfig(
     format="%(asctime)s -%(levelname)s  -  %(message)s ",
     encoding="utf-8",
     datefmt="%m/%d/%Y %I:%M:%S %p",
     filename="log/anchor/system_anchor.log",
-    filemode="w",
+    filemode="a",
 )
 
 
@@ -27,7 +29,14 @@ def upload_file(file_path, infos):
     passwd = os.getenv("PASSWORD")
     try:
         options = ChromeOptions()
+        agentes = []
+        with open("./user_Agents.txt") as file:
+            for line in file:
+                agentes.append(line)
+        agente = agentes[random.randint(0, len(agentes) - 1)]
+        options.add_argument(f"user-agent={agente}")
         options.add_argument("--headless")
+        options.add_argument("--disable-gpu")
         print("iniciando upload")
         drive = Chrome(options=options)
         drive.get(url)
@@ -41,6 +50,7 @@ def upload_file(file_path, infos):
         inputFile = drive.find_element(By.TAG_NAME, "input")
         drive.execute_script("arguments[0].style.display='block';", inputFile)
         inputFile.send_keys(os.path.abspath(file_path))
+        sleep(1000)
         print("aguardando upload")
         wait = WebDriverWait(drive, 500)
         element = wait.until(
@@ -76,8 +86,8 @@ def upload_file(file_path, infos):
 
 if __name__ == "__main__":
     dist = {
-        "title": "Falando com Maker Comece cedo mas saiba onde quer chegar! [Thais Sadami]",
+        "title": "Falando com Maker mock",
         "description": "é um teste",
     }
-    name = "./audio/test.mp3"
+    name = "./istockphoto-1316274253-640_adpp_is.mp3"
     upload_file(name, dist)
