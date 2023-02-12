@@ -5,3 +5,8 @@ audio
 .env
 geckodriver.log
 env
+chromedriver
+chromedriver_linux64
+log
+chromedriver_linux64.zip
+istockphoto-1316274253-640_adpp_is.mp3

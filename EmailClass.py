@@ -3,6 +3,16 @@ import os
 import dotenv
 import boto3
 from botocore.exceptions import ClientError
+import logging
+
+logging.basicConfig(
+    format="%(asctime)s -%(levelname)s  -  %(message)s ",
+    level=logging.INFO,
+    encoding="utf-8",
+    datefmt="%d/%m/%Y %I:%M:%S %p",
+    filename="log/anchor/system_anchor.log",
+    filemode="a",
+)
 
 dotenv.load_dotenv()
 
@@ -17,8 +27,11 @@ class email_sender:
 
     def send_sucesso(self):
         data = {
-            "from": {"email": self.sender},
-            "to": [{"email": self.receiver}],
+            "from": self.sender,
+            "to": [
+                os.getenv("MAIN_EMAIL"),
+                os.getenv("SECUNDARY_EMAIL"),
+            ],
             "subject": self.subject,
             "html": f"<strong>{self.message}</strong>",
             "category": "automação",
@@ -28,11 +41,11 @@ class email_sender:
     def send_falha(self):
         self.receiver = (
             [
-                os.getenv("EMAIL"),
+                os.getenv("MAIN_EMAIL"),
                 os.getenv("SECUNDARY_EMAIL"),
             ]
             if os.getenv("SECUNDARY_EMAIL") is not None
-            else [{"email": os.getenv("EMAIL")}]
+            else [{os.getenv("MAIN_EMAIL")}]
         )
         self.replace_mensage("foi publicado com sucesso", "não foi publicado")
         data = {
@@ -78,5 +91,9 @@ class email_sender:
                 },
                 Source=data["from"],
             )
+            logging.info("email enviado com sucesso")
         except ClientError as e:
+            logging.exception(
+                "esse é o erro ocorrido: %s", e.response["Error"]["Message"]
+            )
             print(e.response["Error"]["Message"])

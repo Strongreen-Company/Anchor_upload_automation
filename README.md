@@ -62,9 +62,9 @@ Adicione notas adicionais sobre como implantar isso em um sistema ativo
 
 Mencione as ferramentas que você usou para criar seu projeto
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - O framework web usado
-* [Maven](https://maven.apache.org/) - Gerente de Dependência
-* [ROME](https://rometools.github.io/rome/) - Usada para gerar RSS
+-   [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - O framework web usado
+-   [Maven](https://maven.apache.org/) - Gerente de Dependência
+-   [ROME](https://rometools.github.io/rome/) - Usada para gerar RSS
 
 ## 🖇️ Colaborando
 
@@ -72,12 +72,12 @@ Por favor, leia o [CONTRIBUTING.md](https://github.com/Strongreen-Company/Anchor
 
 ## 📌 Versão
 
-Nós usamos [SemVer](http://semver.org/) para controle de versão. Para as versões disponíveis, observe as [tags neste repositório](https://github.com/suas/tags/do/projeto). 
+Nós usamos [SemVer](http://semver.org/) para controle de versão. Para as versões disponíveis, observe as [tags neste repositório](https://github.com/suas/tags/do/projeto).
 
 ## ✒️ Autores
 
-* **Flaco** - *Desenvolvimento* - [flaco](https://github.com/LucasBispoMenezes)
-* **Ströngreen** - *Documentação* - [Ströngreen](https://github.com/strongreen)
+-   **Flaco** - _Desenvolvimento_ - [flaco](https://github.com/LucasBispoMenezes)
+-   **Ströngreen** - _Documentação_ - [Ströngreen](https://github.com/strongreen)
 
 Você também pode ver a lista de todos os [colaboradores](https://github.com/usuario/projeto/colaboradores) que participaram deste projeto.
 
@@ -87,7 +87,7 @@ Este projeto está sob a licença (sua licença) - veja o arquivo [LICENSE.md](h
 
 ## 🎁 Expressões de gratidão
 
-* Conte a outras pessoas sobre este projeto 📢;
-* Convide alguém da equipe para uma cerveja 🍺;
-* Um agradecimento publicamente 🫂;
-* etc.
+-   Conte a outras pessoas sobre este projeto 📢;
+-   Convide alguém da equipe para uma cerveja 🍺;
+-   Um agradecimento publicamente 🫂;
+-   log.

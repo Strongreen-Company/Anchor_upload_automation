@@ -1,0 +1,3 @@
+o usuario que rodar esse sistema deve está no grupo root
+o init tem que rodar como sudo 
+deve rodar o transforme_env.sh

@@ -4,6 +4,16 @@ from pytube import YouTube
 import shutil
 from banner import print_banner
 from uploadSelenium import upload_file
+import logging
+
+
+logging.basicConfig(
+    format="%(asctime)s -%(levelname)s  -  %(message)s ",
+    encoding="utf-8",
+    filename="log/anchor/system_anchor.log",
+    level=logging.INFO,
+    filemode="a",
+)
 
 
 def downloadAndUpload(link, index=1):
@@ -22,6 +32,7 @@ def downloadAndUpload(link, index=1):
             {"title": yt.title, "description": yt.description},
         )
     except Exception as e:
+        logging.exception("esse é o erro ocorrido: %s", e)
         print(f"Error: {e}")
         print("Verifique se a url esta correta ou se o video esta disponivel")
 
@@ -31,7 +42,7 @@ def main(link=None):
         if link is not None:
             downloadAndUpload(link)
             shutil.rmtree("audio")
-        elif sys.argv[1] and sys.argv[1] == "-path":
+        elif sys.argv[1] == "-path":
             print("initiating download")
             with open(sys.argv[2], "r") as file:
                 for i, line in enumerate(file):
@@ -39,13 +50,19 @@ def main(link=None):
             shutil.rmtree("audio")
 
     except (IndexError):
+        logging.warning("argumentos não informados")
         print_banner()
     except (FileNotFoundError):
+        logging.warning("arquivo não encontrado")
         print("arquivo não encontrado")
     except KeyboardInterrupt:
+        logging.info("saindo do programa ...")
         print("\nsaindo do programa ...")
         shutil.rmtree("audio")
         sys.exit()
+    except Exception as e:
+        logging.exception("esse é o erro ocorrido: %s", e)
+        shutil.rmtree("audio")
 
 
 if __name__ == "__main__":
