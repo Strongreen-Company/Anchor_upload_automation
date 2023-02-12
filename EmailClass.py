@@ -97,9 +97,3 @@ class email_sender:
                 "esse é o erro ocorrido: %s", e.response["Error"]["Message"]
             )
             print(e.response["Error"]["Message"])
-
-
-lucas = email_sender()
-
-lucas.send_sucesso()
-lucas.send_falha()
